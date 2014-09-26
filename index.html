@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatBox</title>
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"></link>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+</head>
+<body>
+
+  <form action="">
+    <input type="text" class="inputMessage">
+    <button>Send</button>
+  </form>
+  
+  <ul style="list-style-type:none;" id="messages"></ul>
+  
+<script>
+
+$(function() {
+
+  var socket = io();
+  var username = prompt("Enter a username");
+  
+  $('form').submit(function(){
+    socket.emit('add message', $('.inputMessage').val());
+    $('.inputMessage').val('');
+    return false;
+  });
+  
+  
+  socket.on('add message', function(msg){
+    $('#messages').append($('<li>').text(username + ' says: ' + msg));
+    
+    
+  });
+
+  
+});
+
+</script>
+</body>
+
+</html>
