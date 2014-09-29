@@ -9,7 +9,7 @@
 </head>
 <body>
 
-  <form action="">
+  <form method="" action="">
     <input type="text" class="inputMessage">
     <button>Send</button>
   </form>
@@ -20,23 +20,50 @@
 
 $(function() {
 
-  var socket = io();
-  var username = prompt("Enter a username");
+  var userList    = $('#users');
+  var messageList = $('#messages');
   
-  $('form').submit(function(){
-    socket.emit('add message', $('.inputMessage').val());
-    $('.inputMessage').val('');
-    return false;
+  var socket = io.connect();
+  
+  socket.on('connect', function(){
+    console.log('hello');
+    var username = prompt("Enter a username");
+    socket.emit('join', username);
   });
   
-  
-  socket.on('add message', function(msg){
-    $('#messages').append($('<li>').text(username + ' says: ' + msg));
-    
-    
-  });
+
+
 
   
+  
+  socket.on('text', function(msg) {
+    var li = $('<li></li>');
+    li.html(msg);
+    messageList.append(li);
+
+    // Ensure that autoscrolling is ocurring
+    messageList.scrollTop(messageList[0].scrollHeight);
+  });
+  socket.on('user connected', addUser);
+
+  
+  
+  function addUser(username) {
+      var li = $('<li></li>');
+      li.addClass('user');
+      li.attr('id', username);
+      li.html('<i class="icon-user"></i> '+ username);
+      userList.append(li);
+    }
+    
+  
+  $('form').submit(function(event){
+    
+    msg = $('.inputMessage').val();
+    socket.emit('text', msg);
+    event.preventDefault();
+    $('.inputMessage').val('');
+  });
 });
 
 </script>

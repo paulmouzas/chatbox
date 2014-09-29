@@ -22,9 +22,25 @@ var numUsers = 0;
 io.on('connection', function(socket){
   var addedUser = false;
   
-  // when the client emits 'new message', this listens and executes
-  socket.on('add message', function(data) {
-    io.emit('add message', data);
+  
+  socket.on('join', function(data) {
+  
+    socket.username = data;
+    
+    //socket.use('username', username, function() {
+    //  socket.broadcast.emit('user_connected', username);
+    //  for (var sid in io.sockets.sockets) {
+    //    io.sockets.sockets[sid].get('username', function(err, username) {
+    //      socket.emit('user_connected', username);
+    //    });
+    //  }
+    console.log(socket.username)
+  });
+  
+  socket.on('text', function(msg) {
+    console.log('in here');
+    io.emit('text', socket.username + ': ' + msg);
+
   });
 
 });
