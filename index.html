@@ -8,7 +8,7 @@
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 </head>
 <body>
-
+  <ul id="users"></ul>
   <form method="" action="">
     <input type="text" class="inputMessage">
     <button>Send</button>
@@ -29,12 +29,9 @@ $(function() {
     console.log('hello');
     var username = prompt("Enter a username");
     socket.emit('join', username);
-  });
+  }); 
   
-
-
-
-  
+  socket.on('user_connected', addUser);
   
   socket.on('text', function(msg) {
     var li = $('<li></li>');
@@ -46,8 +43,6 @@ $(function() {
   });
   socket.on('user connected', addUser);
 
-  
-  
   function addUser(username) {
       var li = $('<li></li>');
       li.addClass('user');
@@ -55,8 +50,7 @@ $(function() {
       li.html('<i class="icon-user"></i> '+ username);
       userList.append(li);
     }
-    
-  
+
   $('form').submit(function(event){
     
     msg = $('.inputMessage').val();
