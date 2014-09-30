@@ -21,12 +21,19 @@ io.on('connection', function(socket){
   socket.on('join', function(username) {
     socket.username = username;
     usernames[username] = username;
-    socket.broadcast.emit('user connected', usernames);
-
+    socket.broadcast.emit('announcement', username + ' joined the chat.');
+    socket.broadcast.emit('user connected', username);
+    for (var name in usernames){
+      socket.emit('user connected', usernames[name]);
+    }
   });
 
-  socket.on('text', function(msg) {
-    io.emit('text', socket.username + ': ' + msg);
+  socket.on('disconnect', function() {
+    socket.broadcast.emit('announcement', socket.username + ' left the chat.');
+  });
+  
+  socket.on('chat message', function(msg) {
+    io.emit('chat message', socket.username + ': ' + msg);
   });
   
 });

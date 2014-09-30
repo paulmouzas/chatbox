@@ -26,12 +26,12 @@ $(function() {
   var socket = io.connect();
   
   socket.on('connect', function(){
-    console.log('hello');
     var username = prompt("Enter a username");
     socket.emit('join', username);
   }); 
   
-  socket.on('text', function(msg) {
+  
+  socket.on('chat message', function(msg) {
     var li = $('<li></li>');
     li.html(msg);
     messageList.append(li);
@@ -39,21 +39,31 @@ $(function() {
     // Ensure that autoscrolling is ocurring
     messageList.scrollTop(messageList[0].scrollHeight);
   });
+  
   socket.on('user connected', addUsers);
 
-  function addUsers(usernames) {
-      for (var name in usernames){
-          var li = $('<li></li>');
-          li.addClass('user');
-          li.html('<i class="icon-user"></i> '+ usernames[name]);
-          userList.append(li);
-      }
+  socket.on('announcement', function(msg){
+    var li = $('<li></li>');
+    li.html(msg);
+    messageList.append(li);
+
+    // Ensure that autoscrolling is ocurring
+    messageList.scrollTop(messageList[0].scrollHeight);
+  });
+  
+  function addUsers(username) {
+
+      var li = $('<li></li>');
+      li.addClass('user');
+      li.html('<i class="icon-user"></i> '+ username);
+      userList.append(li);
+
     }
 
   $('form').submit(function(event){
     
     msg = $('.inputMessage').val();
-    socket.emit('text', msg);
+    socket.emit('chat message', msg);
     event.preventDefault();
     $('.inputMessage').val('');
   });
