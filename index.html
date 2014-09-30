@@ -41,7 +41,12 @@ $(function() {
   });
   
   socket.on('user connected', addUsers);
-
+  socket.on('user disconnected', function(userid) {
+    $('#'+userid).remove()
+    console.log('working');
+  });
+  
+  
   socket.on('announcement', function(msg){
     var li = $('<li></li>');
     li.html(msg);
@@ -55,6 +60,7 @@ $(function() {
 
       var li = $('<li></li>');
       li.addClass('user');
+      li.attr('id', username);
       li.html('<i class="icon-user"></i> '+ username);
       userList.append(li);
 

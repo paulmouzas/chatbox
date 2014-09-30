@@ -30,6 +30,9 @@ io.on('connection', function(socket){
 
   socket.on('disconnect', function() {
     socket.broadcast.emit('announcement', socket.username + ' left the chat.');
+    socket.broadcast.emit('user disconnected', socket.username);
+
+    delete usernames[socket.username];
   });
   
   socket.on('chat message', function(msg) {
