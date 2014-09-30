@@ -11,7 +11,7 @@ server.listen(port, function () {
 });
 
 app.get('/', function(req, res) {
-  res.sendFile('C:\\users\\mouzasp\\projects\\chatbox\\index.html');
+  res.sendFile(__dirname + '\\index.html');
 
 });
 
