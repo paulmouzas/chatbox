@@ -10,21 +10,24 @@ server.listen(port, function () {
 });
 
 app.get('/', function(req, res) {
-  res.sendFile(__dirname + '\\index.html');
+  res.sendFile(__dirname + '//index.html');
 });
 
 
+var usernames = {};
+
 io.on('connection', function(socket){
 
-  socket.on('join', function(data) {
-    socket.username = data;
-    socket.broadcast.emit('user_connected', socket.username);
-    for (var sid in io.sockets.sockets) {
+  socket.on('join', function(username) {
+    socket.username = username;
+    usernames[username] = username;
+    socket.broadcast.emit('user connected', usernames);
 
   });
 
   socket.on('text', function(msg) {
     io.emit('text', socket.username + ': ' + msg);
   });
+  
 });
 

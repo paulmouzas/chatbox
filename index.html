@@ -31,8 +31,6 @@ $(function() {
     socket.emit('join', username);
   }); 
   
-  socket.on('user_connected', addUser);
-  
   socket.on('text', function(msg) {
     var li = $('<li></li>');
     li.html(msg);
@@ -41,14 +39,15 @@ $(function() {
     // Ensure that autoscrolling is ocurring
     messageList.scrollTop(messageList[0].scrollHeight);
   });
-  socket.on('user connected', addUser);
+  socket.on('user connected', addUsers);
 
-  function addUser(username) {
-      var li = $('<li></li>');
-      li.addClass('user');
-      li.attr('id', username);
-      li.html('<i class="icon-user"></i> '+ username);
-      userList.append(li);
+  function addUsers(usernames) {
+      for (var name in usernames){
+          var li = $('<li></li>');
+          li.addClass('user');
+          li.html('<i class="icon-user"></i> '+ usernames[name]);
+          userList.append(li);
+      }
     }
 
   $('form').submit(function(event){
