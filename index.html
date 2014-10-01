@@ -37,21 +37,27 @@ $(function() {
 
   var userList    = $('#users');
   var messageList = $('#messages');
-  var username;
+  var username = sessionStorage.getItem('username');
   var socket = io.connect();
   
   socket.on('connect', function(){
-    $('#loginForm').submit(function(e){
-      e.preventDefault();
-      username = $('#inputUsername').val();
-
+    if (username){
+      $('#loginContainer').hide();
       $('#chat').show();
-      $('#loginContainer').fadeOut();
       socket.emit('join', username);
-       
        $('#inputMessage').focus();
-    });
-
+    } else {
+        $('#loginForm').submit(function(e){
+          e.preventDefault();
+          username = $('#inputUsername').val();
+          sessionStorage.setItem("username", username);
+          $('#chat').show();
+          $('#loginContainer').fadeOut();
+          socket.emit('join', username);
+           
+          $('#inputMessage').focus();
+        });
+    }
   }); 
   
   
