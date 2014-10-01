@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>ChatBox</title>
-    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" type="text/css" href="styles/style.css"></link>
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 </head>
 <body>
+
+  <ul id="messages"></ul>
   <ul id="users"></ul>
   <form method="" action="">
     <input type="text" class="inputMessage">
     <button>Send</button>
   </form>
-  
-  <ul style="list-style-type:none;" id="messages"></ul>
-  
 <script>
 
 $(function() {
@@ -28,6 +27,7 @@ $(function() {
   socket.on('connect', function(){
     var username = prompt("Enter a username");
     socket.emit('join', username);
+    $('input').focus();
   }); 
   
   
@@ -43,7 +43,6 @@ $(function() {
   socket.on('user connected', addUsers);
   socket.on('user disconnected', function(userid) {
     $('#'+userid).remove()
-    console.log('working');
   });
   
   

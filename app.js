@@ -9,6 +9,8 @@ server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
 
+app.use("/styles", express.static(__dirname + '/styles'));
+
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '//index.html');
 });
