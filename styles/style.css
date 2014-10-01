@@ -1,6 +1,7 @@
 * {
   -moz-box-sizing: border-box;
        box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
 }
 form {
   position: fixed;
@@ -14,6 +15,37 @@ form input {
 }
 form button {
   width:9%;
-  height: 2.2em;
+  height: 2.5em;
   border: none;
+}
+
+.container {
+  min-width:500px;
+}
+
+#usersContainer {
+  float:right;
+  width:30%;
+}
+
+#users li:first-child{
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+#messagesContainer {
+  float:left;
+  width:69%;
+}
+
+ul {
+  list-style-type:none;
+}
+
+#messages li:nth-child(odd) {
+  background-color:#eee;
+}
+
+#messages li {
+  min-
 }

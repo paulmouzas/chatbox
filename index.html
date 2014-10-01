@@ -3,18 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>ChatBox</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="styles/style.css"></link>
     <script src="/socket.io/socket.io.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 </head>
 <body>
-
-  <ul id="messages"></ul>
-  <ul id="users"></ul>
+<div class="container">
+  <div id="messagesContainer">
+    <ul id="messages"></ul>
+  </div>
+  
+  <div id="usersContainer">
+    <ul id="users"><li>Users</li></ul>
+  </div>
+  
   <form method="" action="">
     <input type="text" class="inputMessage">
     <button>Send</button>
   </form>
+</div>
 <script>
 
 $(function() {
