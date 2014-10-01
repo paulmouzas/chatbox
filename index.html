@@ -10,6 +10,7 @@
 </head>
 <body>
 <div class="container">
+  <div id="chat">
   <div id="messagesContainer">
     <ul id="messages"></ul>
   </div>
@@ -18,9 +19,16 @@
     <ul id="users"><li>Users</li></ul>
   </div>
   
-  <form method="" action="">
+  <form method="" action="" id="chatForm">
     <input type="text" class="inputMessage">
     <button>Send</button>
+  </form>
+  </div>
+</div>
+
+<div id="loginContainer">
+  <form id="loginForm"action="" method="">
+    Enter a username: <input type="text" id="inputUsername"><button>Login</button>
   </form>
 </div>
 <script>
@@ -29,13 +37,21 @@ $(function() {
 
   var userList    = $('#users');
   var messageList = $('#messages');
-  
+  var username;
   var socket = io.connect();
   
   socket.on('connect', function(){
-    var username = prompt("Enter a username");
-    socket.emit('join', username);
-    $('input').focus();
+    $('#loginForm').submit(function(e){
+      e.preventDefault();
+      username = $('#inputUsername').val();
+
+      $('#chat').show();
+      $('#loginContainer').fadeOut();
+      socket.emit('join', username);
+       
+       $('#inputMessage').focus();
+    });
+
   }); 
   
   
@@ -63,8 +79,9 @@ $(function() {
     messageList.scrollTop(messageList[0].scrollHeight);
   });
   
-  function addUsers(username) {
 
+  
+  function addUsers(username) {
       var li = $('<li></li>');
       li.addClass('user');
       li.attr('id', username);
@@ -73,7 +90,7 @@ $(function() {
 
     }
 
-  $('form').submit(function(event){
+  $('#chatForm').submit(function(event){
     
     msg = $('.inputMessage').val();
     socket.emit('chat message', msg);

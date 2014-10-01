@@ -3,20 +3,20 @@
        box-sizing: border-box;
   font-family: 'Open Sans', sans-serif;
 }
-form {
+#chatForm {
   position: fixed;
   bottom: 0px;
   width: 100%;
 
 }
-form input {
+#chatForm input {
   width: 90%;
-  line-height: 2.2em;
+  line-height: 2.5em;
 }
-form button {
+#chatForm button {
   width:9%;
   height: 2.5em;
-  border: none;
+  font-size:1em;
 }
 
 .container {
@@ -46,6 +46,14 @@ ul {
   background-color:#eee;
 }
 
-#messages li {
-  min-
+#chat {
+  display:none;
+}
+
+#loginContainer{
+  width:100%;
+}
+
+#loginForm {
+  height:50%;
 }
