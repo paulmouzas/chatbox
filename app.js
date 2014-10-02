@@ -23,7 +23,7 @@ io.on('connection', function(socket){
   socket.on('join', function(username) {
     socket.username = username;
     usernames[username] = username;
-    socket.broadcast.emit('announcement', username + ' joined the chat.');
+    socket.broadcast.emit('announcement', username + ' joined the chat.', 'joined');
     socket.broadcast.emit('user connected', username);
     for (var name in usernames){
       socket.emit('user connected', usernames[name]);
@@ -31,7 +31,7 @@ io.on('connection', function(socket){
   });
 
   socket.on('disconnect', function() {
-    socket.broadcast.emit('announcement', socket.username + ' left the chat.');
+    socket.broadcast.emit('announcement', socket.username + ' left the chat.', 'left');
     socket.broadcast.emit('user disconnected', socket.username);
 
     delete usernames[socket.username];

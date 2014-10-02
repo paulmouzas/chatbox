@@ -45,6 +45,13 @@ ul {
 #messages li:nth-child(odd) {
   background-color:#eee;
 }
+#messages li#left {
+  color: #FF4136;
+}
+
+#messages li#joined {
+  color: #2ECC40
+}
 
 #chat {
   display:none;

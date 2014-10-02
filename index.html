@@ -76,8 +76,9 @@ $(function() {
   });
   
   
-  socket.on('announcement', function(msg){
+  socket.on('announcement', function(msg, attrib){
     var li = $('<li></li>');
+    li.attr('id', attrib);
     li.html(msg);
     messageList.append(li);
 
@@ -91,7 +92,7 @@ $(function() {
       var li = $('<li></li>');
       li.addClass('user');
       li.attr('id', username);
-      li.html('<i class="icon-user"></i> '+ username);
+      li.html( username);
       userList.append(li);
 
     }
